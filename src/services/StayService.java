@@ -34,11 +34,11 @@ public class StayService implements IService<Stay>{
             st=cnx.createStatement();
             String query="INSERT INTO `stay`"
                     + "( `capacity`, `description`,"
-                    + " `startdate_availability`,"
-                    + " `enddate_availability`, `idhost`)"
+                    + " `startdateav`,"
+                    + " `enddateav`, `users_id`)"
                     + " VALUES ('"+t.getCapacity()+"','"+t.getDescription()+"',"
-                    + "'"+t.getStartdate_availability()+"','"+t.getEnddate_availability()+"',"
-                    + "'"+t.getIdhost()+"')";
+                    + "'"+t.getstartdateav()+"','"+t.getenddateav()+"',"
+                    + "'"+t.getusers_id()+"')";
             st.executeUpdate(query);
         } catch (SQLException ex) {
             Logger.getLogger(StayService.class.getName()).log(Level.SEVERE, null, ex);
@@ -54,8 +54,8 @@ public class StayService implements IService<Stay>{
             st.setInt(1, t.getCapacity());
             
             st.setString(2,t.getDescription());
-            st.setDate(3,new java.sql.Date(t.getStartdate_availability().getTime()));
-            st.setDate(4,new java.sql.Date(t.getEnddate_availability().getTime()));
+            st.setDate(3,new java.sql.Date(t.getstartdateav().getTime()));
+            st.setDate(4,new java.sql.Date(t.getenddateav().getTime()));
             
             st.setInt(5, id);
             st.executeUpdate();
@@ -85,9 +85,9 @@ public class StayService implements IService<Stay>{
                 s.setId(rs.getInt("id"));
                 s.setCapacity(rs.getInt("capacity"));
                 s.setDescription(rs.getString("description"));
-                s.setStartdate_availability(rs.getDate("startdate_availability"));
-                s.setEnddate_availability(rs.getDate("enddate_availability"));
-                s.setIdhost(rs.getInt("idhost"));
+                s.setstartdateav(rs.getDate("startdateav"));
+                s.setenddateav(rs.getDate("enddateav"));
+                s.setusers_id(rs.getInt("users_id"));
                 ls.add(s);
             }
         } catch (SQLException ex) {
@@ -100,16 +100,16 @@ public class StayService implements IService<Stay>{
         List<Stay> lb=new ArrayList<>();
         try {
             Statement st=cnx.createStatement();
-            String query="select * from stay where idhost="+id;
+            String query="select * from stay where users_id="+id;
             ResultSet rs=st.executeQuery(query);
             while(rs.next()){
                 Stay s =new Stay();
                 s.setId(rs.getInt("id"));
                 s.setCapacity(rs.getInt("capacity"));
                 s.setDescription(rs.getString("description"));
-                s.setStartdate_availability(rs.getDate("startdate_availability"));
-                s.setEnddate_availability(rs.getDate("enddate_availability"));
-                s.setIdhost(rs.getInt("idhost"));
+                s.setstartdateav(rs.getDate("startdateav"));
+                s.setenddateav(rs.getDate("enddateav"));
+                s.setusers_id(rs.getInt("users_id"));
                 
                 lb.add(s);
             }

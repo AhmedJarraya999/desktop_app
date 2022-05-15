@@ -14,30 +14,74 @@ import java.util.Date;
 public class Stay {
     private int id;
     private int capacity;
-    private int idhost;
+    private int users_id;
     private String description;
-    private Date startdate_availability ;
-    private Date enddate_availability ;
-
+    private Date startdateav;
+    private Date enddateav;
+    private String photo;
     public Stay() {
     }
 
-    public Stay(int capacity, int idhost, String description, Date startdate_availability, Date enddate_availability) {
+    public Stay(int capacity, int users_id, String description, Date startdateav, Date enddateav) {
         this.capacity = capacity;
-        this.idhost = idhost;
+        this.users_id = users_id;
         this.description = description;
-        this.startdate_availability = startdate_availability;
-        this.enddate_availability = enddate_availability;
+        this.startdateav = startdateav;
+        this.enddateav = enddateav;
     }
 
-    public Stay(int id, int capacity, int idhost, String description, Date startdate_availability, Date enddate_availability) {
+    public Stay(int id, int capacity, int users_id, String description, Date startdateav, Date enddateav) {
         this.id = id;
         this.capacity = capacity;
-        this.idhost = idhost;
+        this.users_id = users_id;
         this.description = description;
-        this.startdate_availability = startdate_availability;
-        this.enddate_availability = enddate_availability;
+        this.startdateav = startdateav;
+        this.enddateav = enddateav;
     }
+    
+     public Stay(int id, int capacity, int users_id, String description, Date startdateav, Date enddateav, String photo) {
+        this.id = id;
+        this.capacity = capacity;
+        this.users_id = users_id;
+        this.description = description;
+        this.startdateav = startdateav;
+        this.enddateav = enddateav;
+        this.photo=photo;
+    }
+
+    public int getUsers_id() {
+        return users_id;
+    }
+
+    public Date getStartdateav() {
+        return startdateav;
+    }
+
+    public Date getEnddateav() {
+        return enddateav;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setUsers_id(int users_id) {
+        this.users_id = users_id;
+    }
+
+    public void setStartdateav(Date startdateav) {
+        this.startdateav = startdateav;
+    }
+
+    public void setEnddateav(Date enddateav) {
+        this.enddateav = enddateav;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+    
+    
     
 
     public int getId() {
@@ -56,12 +100,12 @@ public class Stay {
         this.capacity = capacity;
     }
 
-    public int getIdhost() {
-        return idhost;
+    public int getusers_id() {
+        return users_id;
     }
 
-    public void setIdhost(int idhost) {
-        this.idhost = idhost;
+    public void setusers_id(int users_id) {
+        this.users_id = users_id;
     }
 
     public String getDescription() {
@@ -72,25 +116,26 @@ public class Stay {
         this.description = description;
     }
 
-    public Date getStartdate_availability() {
-        return startdate_availability;
+    public Date getstartdateav() {
+        return startdateav;
     }
 
-    public void setStartdate_availability(Date startdate_availability) {
-        this.startdate_availability = startdate_availability;
+    public void setstartdateav(Date startdateav) {
+        this.startdateav = startdateav;
     }
 
-    public Date getEnddate_availability() {
-        return enddate_availability;
+    public Date getenddateav() {
+        return enddateav;
     }
 
-    public void setEnddate_availability(Date enddate_availability) {
-        this.enddate_availability = enddate_availability;
+    public void setenddateav(Date enddateav) {
+        this.enddateav = enddateav;
     }
 
     @Override
     public String toString() {
-        return "Stay{" + "id=" + id + ", capacity=" + capacity + ", idhost=" + idhost + ", description=" + description + ", startdate_availability=" + startdate_availability + ", enddate_availability=" + enddate_availability + '}'+"\n";
+        return "Stay{" + "id=" + id + ", capacity=" + capacity + ", users_id=" + users_id + ", description="
+                + description + ", startdateav=" + startdateav + ", enddateav=" + enddateav + '}' + "\n";
     }
-    
+
 }

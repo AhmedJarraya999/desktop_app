@@ -16,23 +16,26 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private int phone;
-    private Role role;
+    private String phone;
+    private Roles roles;
+  
 
     public User() {
     }
 
-    public User(String firstname, String lastname, String username, String email, String password, int phone, Role role) {
+    public User(String firstname, String lastname, String username, String email, String password, String phone,
+            Roles roles) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.role = role;
+        this.roles = roles;
     }
 
-    public User(int id, String firstname, String lastname, String username, String email, String password, int phone, Role role) {
+    public User(int id, String firstname, String lastname, String username, String email, String password, String phone,
+            Roles roles) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -40,8 +43,12 @@ public class User {
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.role = role;
+        this.roles = roles;
     }
+    
+  
+
+
 
     public int getId() {
         return id;
@@ -91,25 +98,26 @@ public class User {
         this.password = password;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public Role getRole() {
-        return role;
+    public Roles getRole() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(Roles roles) {
+        this.roles = roles;
     }
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username + ", email=" + email + ", password=" + password + ", phone=" + phone + ", role=" + role + '}'+"\n";
+        return "User{" + "id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
+                + ", email=" + email + ", password=" + password + ", phone=" + phone + ", role=" + roles + '}' + "\n";
     }
-    
+
 }

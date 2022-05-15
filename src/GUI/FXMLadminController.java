@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import entity.Role;
+import entity.Roles;
 import entity.User;
 import java.net.URL;
 import java.time.Instant;
@@ -48,7 +48,7 @@ public class FXMLadminController implements Initializable {
     @FXML
     private PasswordField pfpassword;
     @FXML
-    private ComboBox<Role> comborole;
+    private ComboBox<Roles> comborole;
     @FXML
     private TextField tfsearch;
     UserService us=new UserService();
@@ -61,7 +61,7 @@ public class FXMLadminController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        comborole.getItems().setAll(Role.values());
+        comborole.getItems().setAll(Roles.values());
         refreshlist();
         recherche_avance();
     }    
@@ -76,7 +76,7 @@ public class FXMLadminController implements Initializable {
         tfusername.setText(u.getUsername());
         
         
-        tfnumber.setText(Integer.toString(u.getPhone()));
+        tfnumber.setText(u.getPhone());
         comborole.setValue(u.getRole());
         id_update=u.getId();
     }
@@ -117,8 +117,9 @@ public class FXMLadminController implements Initializable {
             u.setUsername(tfusername.getText());
             u.setEmail(tfemail.getText());
             u.setPassword(pfpassword.getText());
-            u.setPhone(Integer.parseInt(tfnumber.getText()));
-            u.setRole(comborole.getValue());
+            //u.setPhone(Integer.parseInt(tfnumber.getText()));
+            u.setPhone(tfnumber.getText());
+            u.setRoles(comborole.getValue());
             us.add(u);
             TrayNotification tray = new TrayNotification();
             
@@ -167,8 +168,8 @@ public class FXMLadminController implements Initializable {
             u.setUsername(tfusername.getText());
             u.setEmail(tfemail.getText());
             u.setPassword(pfpassword.getText());
-            u.setPhone(Integer.parseInt(tfnumber.getText()));
-            u.setRole(comborole.getValue());
+            u.setPhone(tfnumber.getText());
+            u.setRoles(comborole.getValue());
             us.update(id_update,u);
             TrayNotification tray = new TrayNotification();
             

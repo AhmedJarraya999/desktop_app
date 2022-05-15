@@ -241,10 +241,10 @@ public class FXMLhostController implements Initializable {
         if(s!=null){
             tfcapacity.setText(String.valueOf(s.getCapacity()));
         tfdescription.setText(s.getDescription());
-        Instant instant = Instant.ofEpochMilli(s.getEnddate_availability().getTime());
+        Instant instant = Instant.ofEpochMilli(s.getenddateav().getTime());
         LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
         dpenddate.setValue(ldt.toLocalDate());
-        Instant instant1 = Instant.ofEpochMilli(s.getStartdate_availability().getTime());
+        Instant instant1 = Instant.ofEpochMilli(s.getstartdateav().getTime());
         LocalDateTime ldt1 = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
         dpstardate.setValue(ldt1.toLocalDate());
         }
@@ -256,10 +256,10 @@ public class FXMLhostController implements Initializable {
          
         idstay.setCellValueFactory(new PropertyValueFactory<>("id"));
         capacity.setCellValueFactory(new PropertyValueFactory<>("capacity"));
-        idhost.setCellValueFactory(new PropertyValueFactory<>("idhost"));
+        idhost.setCellValueFactory(new PropertyValueFactory<>("users_id"));
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
-        startdate.setCellValueFactory(new PropertyValueFactory<>("startdate_availability"));
-        enddate.setCellValueFactory(new PropertyValueFactory<>("enddate_availability"));
+        startdate.setCellValueFactory(new PropertyValueFactory<>("startdateav"));
+        enddate.setCellValueFactory(new PropertyValueFactory<>("enddateav"));
         listviewstay.setItems(data);
     }
     

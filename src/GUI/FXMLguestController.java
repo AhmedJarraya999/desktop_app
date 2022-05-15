@@ -42,15 +42,14 @@ import utils.Mailapi;
 public class FXMLguestController implements Initializable {
     int id;
 
-    
     @FXML
     private TextField tfsearch;
     ObservableList<Stay> data = FXCollections.observableArrayList();
-    StayService ss=new StayService();
-    BookingService bs=new BookingService();
-    List<Stay> stays=ss.findAll();
-    int i=0;
-    int max_stays=stays.size();
+    StayService ss = new StayService();
+    BookingService bs = new BookingService();
+    List<Stay> stays = ss.findAll();
+    int i = 0;
+    int max_stays = stays.size();
     @FXML
     private ImageView imageview;
     @FXML
@@ -73,40 +72,36 @@ public class FXMLguestController implements Initializable {
     private Label labeldescription;
     @FXML
     private Label labelcapacity;
-    
-    UserService us = new UserService() ;
+
+    UserService us = new UserService();
     /**
      * Initializes the controller class.
      */
-    User u=us.findById(AuthentificationController.idglobal);
-    
-  
-    
-     
+    User u = us.findById(AuthentificationController.idglobal);
+
     @Override
-    
+
     public void initialize(URL url, ResourceBundle rb) {
-       
-        
+
         // TODO
-      
-        
-        Stay s=stays.get(i);
-        String picture ="file:" +  "C:\\\\Users\\\\jaray\\\\OneDrive\\\\Documents\\\\PiDev-ahmed\\\\PiDev-ahmed\\\\src\\\\img\\\\stay"+i+".jpg";
-        //String familyname=serviceuser.findbyif(s.getIdhost).getNom();
-        //label.setText(familyname);
-        labelfamily.setText(""+s.getIdhost());
-        labelcapacity.setText(""+s.getCapacity());
-        labeldescription.setText(""+s.getDescription());
-        labelstartdate.setText(""+s.getStartdate_availability());
-        labelenddate.setText(""+s.getEnddate_availability());
-         Image image = new Image(picture);
+
+        Stay s = stays.get(i);
+        String picture = "file:"
+                + "C:\\\\Users\\\\jaray\\\\OneDrive\\\\Documents\\\\PiDev-ahmed\\\\PiDev-ahmed\\\\src\\\\img\\\\stay"
+                + i + ".jpg";
+        // String familyname=serviceuser.findbyif(s.getIdhost).getNom();
+        // label.setText(familyname);
+        labelfamily.setText("" + s.getusers_id());
+        labelcapacity.setText("" + s.getCapacity());
+        labeldescription.setText("" + s.getDescription());
+        labelstartdate.setText("" + s.getstartdateav());
+        labelenddate.setText("" + s.getenddateav());
+        Image image = new Image(picture);
 
         imageview.setImage(image);
-       recherche_avance();
+        recherche_avance();
 
-        
-    }    
+    }
 
     @FXML
     private void disconnect(ActionEvent event) {
@@ -115,100 +110,93 @@ public class FXMLguestController implements Initializable {
 
     @FXML
     private void makereservation(ActionEvent event) {
-        
-        
-        Stay s=stays.get(i);
-        if(s!=null){
-            Booking b=new Booking();
-            
+
+        Stay s = stays.get(i);
+        if (s != null) {
+            Booking b = new Booking();
+
             b.setBookingdate(Date.valueOf(LocalDate.now()));
-            b.setFirstDate(s.getStartdate_availability());
-            b.setLastDate(s.getEnddate_availability());
-            b.setIdhost(s.getIdhost());
+            b.setFirstDate(s.getstartdateav());
+            b.setLastDate(s.getenddateav());
+            b.setIdhost(s.getusers_id());
             b.setIdguest(u.getId());
-            //u.getId()
+            // u.getId()
             bs.add(b);
             ss.delete(s.getId());
-            
+
         }
         TrayNotification tray = new TrayNotification();
-            
-            AnimationType type = AnimationType.POPUP;
-            tray.setAnimationType(type);
-            tray.setTitle("Reservation success");
-            tray.setMessage("You successufuly make a reservation in our application");
-            tray.setNotificationType(NotificationType.SUCCESS);
-            tray.showAndDismiss(Duration.millis(1000));
-      
-            //Mailapi.send("testapimail63@gmail.com", "TESTapimail2022", "jihene.saidi@esprit.tn", "Reservation", "You successfuly make a reservation in our application ");
+
+        AnimationType type = AnimationType.POPUP;
+        tray.setAnimationType(type);
+        tray.setTitle("Reservation success");
+        tray.setMessage("You successufuly make a reservation in our application");
+        tray.setNotificationType(NotificationType.SUCCESS);
+        tray.showAndDismiss(Duration.millis(1000));
+
+        // Mailapi.send("testapimail63@gmail.com", "TESTapimail2022",
+        // "jihene.saidi@esprit.tn", "Reservation", "You successfuly make a reservation
+        // in our application ");
 
     }
 
     @FXML
     private void viewfamily(ActionEvent event) {
-        
+
     }
-    
-    public void recherche_avance(){
-       
-        
-        
-        FilteredList<Stay> filtereddata=new FilteredList<>(FXCollections.observableArrayList(stays),b->true);
-        tfsearch.textProperty().addListener((observable,oldvalue,newValue) -> {
-            filtereddata.setPredicate(s1->{
-                if(newValue==null||newValue.isEmpty()){
+
+    public void recherche_avance() {
+
+        FilteredList<Stay> filtereddata = new FilteredList<>(FXCollections.observableArrayList(stays), b -> true);
+        tfsearch.textProperty().addListener((observable, oldvalue, newValue) -> {
+            filtereddata.setPredicate(s1 -> {
+                if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
-                String lowercasefilter=newValue.toLowerCase();
-                if(String.valueOf(s1.getId()).toLowerCase().indexOf(lowercasefilter)!=-1){
+                String lowercasefilter = newValue.toLowerCase();
+                if (String.valueOf(s1.getId()).toLowerCase().indexOf(lowercasefilter) != -1) {
                     return true;
                 }
-                
-                else if(String.valueOf(s1.getIdhost()).toLowerCase().indexOf(lowercasefilter)!=-1){
+
+                else if (String.valueOf(s1.getusers_id()).toLowerCase().indexOf(lowercasefilter) != -1) {
+                    return true;
+                } else if (s1.getenddateav().toString().toLowerCase().indexOf(lowercasefilter) != -1) {
+                    return true;
+                } else if (String.valueOf(s1.getCapacity()).indexOf(lowercasefilter) != -1) {
+                    return true;
+                } else if (s1.getstartdateav().toString().toLowerCase().indexOf(lowercasefilter) != -1) {
                     return true;
                 }
-                else if(s1.getEnddate_availability().toString().toLowerCase().indexOf(lowercasefilter)!=-1){
+
+                else if (s1.getDescription().toLowerCase().indexOf(lowercasefilter) != -1) {
+                    return true;
+                } else if (String.valueOf(s1.getCapacity()).toLowerCase().indexOf(lowercasefilter) != -1) {
                     return true;
                 }
-                else if(String.valueOf(s1.getCapacity()).indexOf(lowercasefilter)!=-1){
-                    return true;
-                }
-                else if(s1.getStartdate_availability().toString().toLowerCase().indexOf(lowercasefilter)!=-1){
-                    return true;
-                }
-                
-                else if(s1.getDescription().toLowerCase().indexOf(lowercasefilter)!=-1){
-                    return true;
-                }
-                else if(String.valueOf(s1.getCapacity()).toLowerCase().indexOf(lowercasefilter)!=-1){
-                    return true;
-                }
-                
-                else{
+
+                else {
                     return false;
                 }
-                
-            });
-            if(filtereddata!=null){
-             Stay s=filtereddata.get(0);
-        String picture ="file:" +  "C:\\\\Users\\\\jaray\\\\OneDrive\\\\Documents\\\\PiDev-ahmed\\\\PiDev-ahmed\\\\src\\\\img\\\\stay"+0+".jpg";
-        //String familyname=serviceuser.findbyif(s.getIdhost).getNom();
-        //label.setText(familyname);
-        labelfamily.setText(""+s.getIdhost());
-        labelcapacity.setText(""+s.getCapacity());
-        labeldescription.setText(""+s.getDescription());
-        labelstartdate.setText(""+s.getStartdate_availability());
-        labelenddate.setText(""+s.getEnddate_availability());
-         Image image = new Image(picture);
 
-        imageview.setImage(image);
-        }
+            });
+            if (filtereddata != null) {
+                Stay s = filtereddata.get(0);
+                String picture = "file:"
+                        + "C:\\\\Users\\\\jaray\\\\OneDrive\\\\Documents\\\\PiDev-ahmed\\\\PiDev-ahmed\\\\src\\\\img\\\\stay"
+                        + 0 + ".jpg";
+                // String familyname=serviceuser.findbyif(s.getIdhost).getNom();
+                // label.setText(familyname);
+                labelfamily.setText("" + s.getusers_id());
+                labelcapacity.setText("" + s.getCapacity());
+                labeldescription.setText("" + s.getDescription());
+                labelstartdate.setText("" + s.getstartdateav());
+                labelenddate.setText("" + s.getenddateav());
+                Image image = new Image(picture);
+
+                imageview.setImage(image);
+            }
         });
-        
-        
-    
-        
-        
+
     }
 
     @FXML
@@ -216,53 +204,54 @@ public class FXMLguestController implements Initializable {
         Runtime rt = Runtime.getRuntime();
         String url = "https://www.facebook.com";
         try {
-                rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
+            rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
         } catch (IOException ioException) {
-                ioException.printStackTrace();
+            ioException.printStackTrace();
         }
     }
 
     @FXML
     private void next(ActionEvent event) {
-        if(i<max_stays-1){
+        if (i < max_stays - 1) {
             i++;
-            Stay s=stays.get(i);
-        
-        
-        String picture ="file:" + "C:\\\\Users\\\\jaray\\\\OneDrive\\\\Documents\\\\PiDev-ahmed\\\\PiDev-ahmed\\\\src\\\\img\\\\stay"+i+".jpg";
-        //String familyname=serviceuser.findbyif(s.getIdhost).getNom();
-        //label.setText(familyname);
-        labelfamily.setText(""+s.getIdhost());
-        labelcapacity.setText(""+s.getCapacity());
-        labeldescription.setText(""+s.getDescription());
-        labelstartdate.setText(""+s.getStartdate_availability());
-        labelenddate.setText(""+s.getEnddate_availability());
-         Image image = new Image(picture);
+            Stay s = stays.get(i);
 
-        imageview.setImage(image);
+            String picture = "file:"
+                    + "C:\\\\Users\\\\jaray\\\\OneDrive\\\\Documents\\\\PiDev-ahmed\\\\PiDev-ahmed\\\\src\\\\img\\\\stay"
+                    + i + ".jpg";
+            // String familyname=serviceuser.findbyif(s.getIdhost).getNom();
+            // label.setText(familyname);
+            labelfamily.setText("" + s.getusers_id());
+            labelcapacity.setText("" + s.getCapacity());
+            labeldescription.setText("" + s.getDescription());
+            labelstartdate.setText("" + s.getstartdateav());
+            labelenddate.setText("" + s.getenddateav());
+            Image image = new Image(picture);
+
+            imageview.setImage(image);
         }
     }
 
     @FXML
     private void previous(ActionEvent event) {
-        if(i>0){
+        if (i > 0) {
             i--;
-            Stay s=stays.get(i);
-        
-        
-        String picture ="file:" + "C:\\\\Users\\\\jaray\\\\OneDrive\\\\Documents\\\\PiDev-ahmed\\\\PiDev-ahmed\\\\src\\\\img\\\\stay"+i+".jpg";
-        //String familyname=serviceuser.findbyif(s.getIdhost).getNom();
-        //label.setText(familyname);
-        labelfamily.setText(""+s.getIdhost());
-        labelcapacity.setText(""+s.getCapacity());
-        labeldescription.setText(""+s.getDescription());
-        labelstartdate.setText(""+s.getStartdate_availability());
-        labelenddate.setText(""+s.getEnddate_availability());
-         Image image = new Image(picture);
+            Stay s = stays.get(i);
 
-        imageview.setImage(image);
+            String picture = "file:"
+                    + "C:\\\\Users\\\\jaray\\\\OneDrive\\\\Documents\\\\PiDev-ahmed\\\\PiDev-ahmed\\\\src\\\\img\\\\stay"
+                    + i + ".jpg";
+            // String familyname=serviceuser.findbyif(s.getIdhost).getNom();
+            // label.setText(familyname);
+            labelfamily.setText("" + s.getusers_id());
+            labelcapacity.setText("" + s.getCapacity());
+            labeldescription.setText("" + s.getDescription());
+            labelstartdate.setText("" + s.getstartdateav());
+            labelenddate.setText("" + s.getenddateav());
+            Image image = new Image(picture);
+
+            imageview.setImage(image);
         }
     }
-    
-    
+
 }
